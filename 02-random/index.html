@@ -10,15 +10,18 @@
      const printResult = (x) => document.writeln(`<p>Result: ${x}</p>`);
 
      async function run() {
+       // Instantiate WebAssembly module
        const { instance, module } = await WebAssembly.instantiateStreaming(
          fetch('./random.wasm'),
          {
            env: {
+             // Provide functions to the module
              rand: getRandomInteger,
              log: printResult,
            }
        });
 
+       // Call wasm function
        instance.exports.logRandomNumber();
      }
      run();

@@ -7,29 +7,37 @@
   <body>
     <script>
      async function run() {
+       // Input string
        const s = "Here is a string!";
-       const stringBytes = new TextEncoder().encode(s);
 
+       // Create an instance of wasm memory of size 1 page (64kB)
        const wasmMemory = new WebAssembly.Memory({ initial: 1 });
-       const wasmMemoryByteView = new Uint8Array(wasmMemory.buffer);
 
+       // Populate the memory with the string bytes
+       const stringBytes = new TextEncoder().encode(s);
+       const wasmMemoryByteView = new Uint8Array(wasmMemory.buffer);
        wasmMemoryByteView.set(stringBytes);
 
+       // Instantiate the WebAssembly module
        const { instance, module } = await WebAssembly.instantiateStreaming(
          fetch("./upper-case.wasm"),
          {
            env: {
+             // Provide memory
              memory: wasmMemory
            }
          }
        );
 
+       // Call wasm function
        instance.exports.toUpperCase(0, stringBytes.length);
 
+       // Read the modified string bytes from memory
        const result = new TextDecoder().decode(
          wasmMemoryByteView.slice(0, stringBytes.length)
        );
 
+       // Print the result
        document.writeln(`<p>Result: ${result}</p>`)
      }
 

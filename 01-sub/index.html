@@ -7,12 +7,15 @@
   <body>
     <script>
       async function run() {
+        // Instantiate module
         const { instance, module } = await WebAssembly.instantiateStreaming(
           fetch('./sub.wasm')
         );
 
+        // Call wasm function
         const result = instance.exports.sub(49, 7);
 
+        // Print result
         document.writeln(`Result: ${result}`);
       }
 

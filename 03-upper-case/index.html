@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>WebAssembly: Upper-Case</title>
+  </head>
+  <body>
+    <script>
+     async function run() {
+       const s = "Here is a string!";
+       const stringBytes = new TextEncoder().encode(s);
+
+       const wasmMemory = new WebAssembly.Memory({ initial: 1 });
+       const wasmMemoryByteView = new Uint8Array(wasmMemory.buffer);
+
+       wasmMemoryByteView.set(stringBytes);
+
+       const { instance, module } = await WebAssembly.instantiateStreaming(
+         fetch("./upper-case.wasm"),
+         {
+           env: {
+             memory: wasmMemory
+           }
+         }
+       );
+
+       instance.exports.toUpperCase(0, stringBytes.length);
+
+       const result = new TextDecoder().decode(
+         wasmMemoryByteView.slice(0, stringBytes.length)
+       );
+
+       document.writeln(`<p>Result: ${result}</p>`)
+     }
+
+     run();
+    </script>
+  </body>
+</html>

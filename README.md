@@ -1,18 +1,9 @@
 # Plain WebAssembly
 
-Playing around with plain WebAssembly.
+This repository contains a few examples of using plain WebAssembly with increasing complexity.
 
-## Requirements
+## Run the examples
 
-* NodeJS
-* WebAssembly Build Tools (WABT)
-
-## Run the code in node.js
-
-1. `wat2wasm src/upper.wat -o src/upper.wasm`
-2. node src/index.js
-
-## Run the code in a browser
-
-1. Start a server in the current directory, for instance: `python3 -m http.server`
-2. Navigate to `http://localhost:<PORT>/src/index.html`
+1. Go to the example directory
+1. Start up a server, for instance `python3 -m http.server`
+1. Navigate to `http://localhost:<PORT>`

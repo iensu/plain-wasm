@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>WebAssembly: Random Number Logger</title>
+  </head>
+  <body>
+    <script>
+     const getRandomInteger = () => Math.abs(Math.random() * 100);
+     const printResult = (x) => document.writeln(`<p>Result: ${x}</p>`);
+
+     async function run() {
+       const { instance, module } = await WebAssembly.instantiateStreaming(
+         fetch('./random.wasm'),
+         {
+           env: {
+             rand: getRandomInteger,
+             log: printResult,
+           }
+       });
+
+       instance.exports.logRandomNumber();
+     }
+     run();
+    </script>
+  </body>
+</html>

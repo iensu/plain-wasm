@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      async function run() {
+        const { instance, module } = await WebAssembly.instantiateStreaming(
+          fetch('./sub.wasm')
+        );
+
+        const result = instance.exports.sub(49, 7);
+
+        document.writeln(`Result: ${result}`);
+      }
+
+      run();
+    </script>
+  </body>
+</html>

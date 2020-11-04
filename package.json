@@ -1,0 +1,13 @@
+{
+  "name": "plain-wasm",
+  "version": "1.0.0",
+  "description": "Playing around with plain WebAssembly.",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.1.2"
+  }
+}
